@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="630" viewBox="0 0 1660 630">
+<defs><marker id="head-4F46E5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4F46E5"/></marker><marker id="head-BE123C" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#BE123C"/></marker><marker id="head-B45309" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B45309"/></marker><marker id="head-475569" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/></marker><marker id="head-64748B" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/></marker><marker id="head-0E7490" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0E7490"/></marker><marker id="head-047857" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#047857"/></marker></defs>
+<rect width="1660" height="630" rx="18" fill="#FCFDFE" stroke="#E2E8F0" stroke-width="2"/>
+<text x="830.0" y="52.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="27" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">Prism — experimental pipeline</text>
+<text x="830.0" y="79.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="14" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">every stage is a gate: nothing reaches the next box unverified, and nothing that fails the last one is reported as a saving</text>
+<rect x="36" y="108" width="228" height="440" rx="16" fill="#F1F5F9" stroke="#475569" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="150.0" y="138.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" fill="#475569" text-anchor="middle" letter-spacing="1.6">PUBLIC DATASETS</text>
+<rect x="320" y="108" width="300" height="440" rx="16" fill="#ECFEFF" stroke="#0E7490" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="470.0" y="138.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" fill="#0E7490" text-anchor="middle" letter-spacing="1.6">1 · SUITE CONSTRUCTION</text>
+<rect x="676" y="108" width="300" height="440" rx="16" fill="#EEF2FF" stroke="#4F46E5" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="826.0" y="138.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" fill="#4F46E5" text-anchor="middle" letter-spacing="1.6">2 · EXECUTION</text>
+<rect x="1032" y="108" width="300" height="440" rx="16" fill="#FFFBEB" stroke="#B45309" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="1182.0" y="138.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" fill="#B45309" text-anchor="middle" letter-spacing="1.6">3 · ANALYSIS</text>
+<rect x="1388" y="108" width="236" height="440" rx="16" fill="#F1F5F9" stroke="#475569" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="1506.0" y="138.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="bold" font-style="normal" fill="#475569" text-anchor="middle" letter-spacing="1.6">VERDICT</text>
+<rect x="60" y="225.0" width="180" height="76" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.7"/>
+<text x="150.0" y="259.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">GSM8K-hard</text>
+<text x="150.0" y="276.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">math + tool use</text>
+<rect x="60" y="355.0" width="180" height="76" rx="10" fill="#FFFFFF" stroke="#475569" stroke-width="1.7"/>
+<text x="150.0" y="389.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">BFCL-v4</text>
+<text x="150.0" y="406.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">multi-turn agent</text>
+<rect x="346" y="160" width="248" height="76" rx="10" fill="#FFFFFF" stroke="#0E7490" stroke-width="1.7"/>
+<text x="470.0" y="186.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">extract + derive</text>
+<text x="470.0" y="203.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">ground truth from the</text>
+<text x="470.0" y="220.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">dataset's own annotations</text>
+<line x1="470.0" y1="242.0" x2="470.0" y2="284.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<polygon points="368,290 572,290 594,328.0 572,366 368,366 346,328.0" fill="#ECFEFF" stroke="#0E7490" stroke-width="2.6"/>
+<text x="470.0" y="324.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">verify_suite</text>
+<text x="470.0" y="341.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">independent re-derivation</text>
+<line x1="470.0" y1="372.0" x2="470.0" y2="414.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<text x="484.0" y="397.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="normal" font-style="italic" fill="#64748B" text-anchor="start">29 of 69 rejected</text>
+<path d="M 346,429 L 346,487 A 124.0,9 0 0 0 594,487 L 594,429 Z" fill="#ECFEFF" stroke="#0E7490" stroke-width="1.9"/>
+<ellipse cx="470.0" cy="429" rx="124.0" ry="9" fill="#FFFFFF" stroke="#0E7490" stroke-width="1.9"/>
+<text x="470.0" y="458.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">53 tasks</text>
+<text x="470.0" y="475.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">EN + PT</text>
+<rect x="702" y="160" width="248" height="76" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.7"/>
+<text x="826.0" y="194.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">factorial expansion</text>
+<text x="826.0" y="211.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">8 conditions × 2 seeds</text>
+<line x1="826.0" y1="242.0" x2="826.0" y2="284.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<rect x="702" y="290" width="248" height="76" rx="10" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2.4"/>
+<text x="826.0" y="316.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">harness</text>
+<text x="826.0" y="333.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">tool schemas in-prompt,</text>
+<text x="826.0" y="350.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">never native tool-calling</text>
+<line x1="826.0" y1="372.0" x2="826.0" y2="414.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<text x="840.0" y="397.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="normal" font-style="italic" fill="#64748B" text-anchor="start">848 runs · 0 errors</text>
+<path d="M 702,429 L 702,487 A 124.0,9 0 0 0 950,487 L 950,429 Z" fill="#EEF2FF" stroke="#4F46E5" stroke-width="1.9"/>
+<ellipse cx="826.0" cy="429" rx="124.0" ry="9" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.9"/>
+<text x="826.0" y="458.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">append-only JSONL</text>
+<text x="826.0" y="475.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">+ hash-pinned manifest</text>
+<rect x="1058" y="160" width="248" height="76" rx="10" fill="#FFFFFF" stroke="#B45309" stroke-width="1.7"/>
+<text x="1182.0" y="194.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">GLMs</text>
+<text x="1182.0" y="211.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">tokens and accuracy</text>
+<line x1="1182.0" y1="242.0" x2="1182.0" y2="284.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<rect x="1058" y="290" width="248" height="76" rx="10" fill="#FFFFFF" stroke="#B45309" stroke-width="1.7"/>
+<text x="1182.0" y="316.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">cluster bootstrap</text>
+<text x="1182.0" y="333.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">resamples tasks, not rows</text>
+<text x="1182.0" y="350.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">BCa intervals</text>
+<line x1="1182.0" y1="372.0" x2="1182.0" y2="414.0" stroke="#64748B" stroke-width="2.0" stroke-linecap="round" marker-end="url(#head-64748B)"/>
+<polygon points="1080,420 1284,420 1306,458.0 1284,496 1080,496 1058,458.0" fill="#FFFBEB" stroke="#B45309" stroke-width="2.6"/>
+<text x="1182.0" y="454.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">accuracy within 3pp?</text>
+<text x="1182.0" y="471.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">non-inferiority gate</text>
+<text x="1182.0" y="516.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="normal" font-style="italic" fill="#64748B" text-anchor="middle">3 of 4 arms in this study fail here</text>
+<rect x="1412" y="225.0" width="188" height="76" rx="10" fill="#ECFDF5" stroke="#047857" stroke-width="2.4"/>
+<text x="1506.0" y="268.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">claimable saving</text>
+<rect x="1412" y="355.0" width="188" height="76" rx="10" fill="#FFF1F2" stroke="#BE123C" stroke-width="2.4"/>
+<text x="1506.0" y="389.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="bold" font-style="normal" fill="#0F172A" text-anchor="middle">frontier point only</text>
+<text x="1506.0" y="406.5" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="normal" font-style="normal" fill="#64748B" text-anchor="middle">no efficiency claim</text>
+<line x1="273.0" y1="328.0" x2="311.0" y2="328.0" stroke="#0E7490" stroke-width="3.0" stroke-linecap="round" marker-end="url(#head-0E7490)"/>
+<line x1="629.0" y1="328.0" x2="667.0" y2="328.0" stroke="#4F46E5" stroke-width="3.0" stroke-linecap="round" marker-end="url(#head-4F46E5)"/>
+<line x1="985.0" y1="328.0" x2="1023.0" y2="328.0" stroke="#B45309" stroke-width="3.0" stroke-linecap="round" marker-end="url(#head-B45309)"/>
+<path d="M 1341,328.0 H 1358 V 263.0 H 1379" fill="none" stroke="#047857" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#head-047857)"/>
+<path d="M 1341,328.0 H 1358 V 393.0 H 1379" fill="none" stroke="#BE123C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#head-BE123C)"/>
+<text x="1363.0" y="251.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" font-style="normal" fill="#047857" text-anchor="start">pass</text>
+<text x="1363.0" y="415.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" font-style="normal" fill="#BE123C" text-anchor="start">fail</text>
+<text x="830.0" y="606.0" font-family="DejaVu Sans, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="normal" font-style="italic" fill="#64748B" text-anchor="middle">ground truth is derived and independently re-verified, never hand-written  ·  the accuracy gate sits between the measurement and the claim</text>
+</svg>
