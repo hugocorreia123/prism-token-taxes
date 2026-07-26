@@ -137,6 +137,55 @@ to running the model in both languages and comparing outcomes directly.
 
 ## How it was measured
 
+### The pipeline end to end
+
+Every stage below is a gate: nothing reaches the next box unverified, and nothing that
+fails the last one gets reported as a saving.
+
+```mermaid
+flowchart LR
+    subgraph src["Public datasets"]
+        G["GSM8K-hard<br/>math + tool use"]
+        B["BFCL-v4<br/>multi-turn agent"]
+    end
+
+    subgraph prep["1 · Suite construction"]
+        X["extract + derive ground truth<br/>from the dataset's own annotations"]
+        V{"verify_suite<br/>independent re-derivation<br/>mandatory gate"}
+        S[("53 tasks<br/>EN + PT")]
+    end
+
+    subgraph exec["2 · Execution"]
+        F["factorial expansion<br/>8 conditions × 2 seeds"]
+        H["harness<br/>tool schemas delivered in-prompt"]
+        R[("append-only JSONL<br/>+ hash-pinned manifest")]
+    end
+
+    subgraph anal["3 · Analysis"]
+        GL["GLMs<br/>tokens and accuracy"]
+        BS["cluster bootstrap<br/>BCa intervals"]
+        D{"non-inferiority gate<br/>accuracy within 3pp?"}
+    end
+
+    G --> X
+    B --> X
+    X --> V
+    V --> S
+    S --> F
+    F --> H
+    H --> R
+    R --> GL
+    GL --> BS
+    BS --> D
+    D -->|"pass"| C1["claimable saving"]
+    D -->|"fail"| C2["frontier point only<br/>no efficiency claim"]
+```
+
+The two properties worth noticing: **ground truth is derived and independently
+re-verified rather than hand-written**, and **the accuracy gate sits between the
+measurement and the claim** — which is exactly why three of four arms in this study
+produce no claim at all.
+
 ### Design
 
 A **2×2×2 within-task factorial**. Every task runs through all eight combinations, so
@@ -183,6 +232,30 @@ hand-typed ground truth caused a false test failure during the pilot.
 Tool schemas are delivered **in-prompt**, never through the provider's native
 tool-calling API, so the Structure factor stays a pure token intervention that behaves
 identically across backends. This decision has consequences — see below.
+
+### Inside a single run
+
+```mermaid
+flowchart TB
+    A["system prompt<br/>+ tool schemas<br/>raw or compressed"] --> B["model reply"]
+    B --> C{"parse the reply"}
+    C -->|"a tool call"| D["execute tool<br/>calculator, lookup,<br/>or filesystem simulator"]
+    D --> E["append TOOL RESULT<br/>to the conversation"]
+    E --> B
+    C -->|"ANSWER: ..."| F["judge<br/>exact value or final state"]
+    C -->|"neither"| G["protocol_violation<br/>logged, never corrected"]
+    G --> B
+    F --> H[("record outcome + every token,<br/>tagged with its source")]
+```
+
+The **Structure** factor changes only the schemas in the first box. The **Budget**
+factor caps how much the model may emit per reply. Everything else is held identical,
+which is what makes the comparison a clean one.
+
+Note the third branch: when the model breaks the protocol, that's **logged and left
+alone**, never silently repaired. Quietly fixing malformed replies would hide exactly
+the failure mode compression is suspected of causing — so the violation rate is treated
+as data, not as noise to clean up.
 
 ### Statistics
 
