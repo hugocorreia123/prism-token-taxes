@@ -1,0 +1,31 @@
+# Prism dependencies.
+#
+# Split by what you actually intend to run — you do not need all of it.
+# Python 3.11+ (developed and run on 3.12 and 3.14).
+
+# --- Analysis pipeline (always needed) -----------------------------
+# GLMs (negative-binomial for tokens, logistic for accuracy) and the
+# Holm / Benjamini-Hochberg multiplicity corrections.
+statsmodels>=0.14
+# Normal quantiles for the BCa bootstrap correction.
+scipy>=1.11
+# DataFrame plumbing between the harness records and the GLMs.
+pandas>=2.0
+numpy>=1.24
+
+# --- M1 core arm: local inference on Apple Silicon ------------------
+# Only required to RUN the local model. Skip on non-Apple hardware or
+# if you are only re-analysing the committed results.
+mlx>=0.15 ; platform_system == "Darwin" and platform_machine == "arm64"
+mlx-lm>=0.14 ; platform_system == "Darwin" and platform_machine == "arm64"
+
+# --- M2 transfer arm: hosted inference ------------------------------
+# Only required to run the Groq arm. Needs GROQ_API_KEY in the
+# environment. Note the free tier's daily token cap makes the
+# multi-turn (BFCL) arm infeasible — see README Limitations.
+groq>=1.0
+
+# --- Not listed, deliberately ---------------------------------------
+# The BFCL simulator is vendored in prism/vendor/bfcl_source/ (Apache
+# 2.0, one disclosed import patch) rather than installed, so the
+# harness runs standalone without cloning the full BFCL repo.
