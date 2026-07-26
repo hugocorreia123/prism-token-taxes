@@ -18,6 +18,7 @@ import re
 import time
 
 from .accounting import RunWriter, canonical_hash
+from .models import GroqRateLimitExhausted
 
 MAX_TURNS = 6
 BASE_SYSTEM = (
@@ -363,6 +364,11 @@ def run_attempt(model, task, factors, seed, temperature, writer: RunWriter,
         try:
             res = model.chat(messages, task, max_tokens=cap,
                              seed=seed_eff or 0, temperature=temperature)
+        except GroqRateLimitExhausted:
+            # Daily quota gone — propagate so the whole run stops cleanly
+            # instead of writing hundreds of harness_error rows over
+            # hours. Resume with --resume once the quota resets.
+            raise
         except Exception as e:
             writer.event("model_error", {"task": task["id"], "err": str(e)})
             outcome, final_text = "harness_error", str(e)

@@ -65,12 +65,24 @@ def compute_rtw(records: list, task_id_field: str = "task_id",
 
     results = {}
     for L in (0, 1):
-        T_on_glm = marginal_prediction(tok_model, 1, 1, L)
-        T_off_glm = marginal_prediction(tok_model, 0, 0, L)
-        rtw_glm = 1 - T_on_glm / T_off_glm
-
+        # Tokens per ATTEMPT from the token model...
+        tok_on = marginal_prediction(tok_model, 1, 1, L)
+        tok_off = marginal_prediction(tok_model, 0, 0, L)
         acc_on_glm = marginal_prediction(acc_model, 1, 1, L)
         acc_off_glm = marginal_prediction(acc_model, 0, 0, L)
+
+        # ...divided by P(success) to get tokens per SUCCESS, which is
+        # the spec's actual primary outcome (§4). An earlier version
+        # computed RTW from tokens-per-attempt alone, silently ignoring
+        # accuracy — it agreed with the direct paired estimate ONLY in
+        # cells where accuracy happened to be equal between arms, and
+        # diverged by >100pp where accuracy differed. Caught by the
+        # dual-computation cross-check on the first real n=53 run,
+        # exactly what that cross-check exists for.
+        T_on_glm = tok_on / acc_on_glm if acc_on_glm > 0 else float("inf")
+        T_off_glm = tok_off / acc_off_glm if acc_off_glm > 0 else float("inf")
+        rtw_glm = (1 - T_on_glm / T_off_glm
+                  if T_off_glm not in (0, float("inf")) else None)
 
         on_cell, off_cell = f"S1B1L{L}", f"S0B0L{L}"
         tok_on, succ_on, tok_off, succ_off = _direct_ratio(

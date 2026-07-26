@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import time
 
+from .models import GroqRateLimitExhausted
 from .accounting import RunWriter
 from .runner import parse_reply, BASE_SYSTEM, CONCISION
 
@@ -90,6 +91,11 @@ def run_multiturn_attempt(model, task, factors, seed, temperature,
                 res = model.chat(messages, task,
                                  max_tokens=(160 if B == 1 else None),
                                  seed=seed_eff or 0, temperature=temperature)
+            except GroqRateLimitExhausted:
+                # Daily quota gone — propagate so the whole run stops
+                # cleanly instead of writing hundreds of harness_error
+                # rows over hours. Resume with --resume after reset.
+                raise
             except Exception as e:
                 writer.event("model_error", {"task": task["id"], "err": str(e)})
                 outcome = "harness_error"

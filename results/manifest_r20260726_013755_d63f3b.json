@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260726_013755_d63f3b",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "groq",
+    "model_id": "openai/gpt-oss-120b",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 53,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/w2_staging/full_suite_n53.json"
+  },
+  "config_hash": "6e50237916a5d76d",
+  "suite_hash": "949f3af78ed60ae7",
+  "ts": 1785026275.0346198
+}

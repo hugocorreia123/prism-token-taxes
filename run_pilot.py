@@ -12,11 +12,12 @@ import argparse
 import itertools
 import json
 import random
+import sys
 from pathlib import Path
 
 from prism.harness.accounting import (RunWriter, canonical_hash,
                                       completed_keys, backfill_orphaned_and_next_attempt)
-from prism.harness.models import make_model, PROTOCOL
+from prism.harness.models import make_model, PROTOCOL, GroqRateLimitExhausted
 from prism.harness.runner import run_attempt
 
 
@@ -134,4 +135,17 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except GroqRateLimitExhausted as e:
+        # Designed stop, not a crash. Results are append-only and
+        # already on disk, so nothing is lost — print something
+        # actionable instead of a 40-line traceback.
+        print(f"\n{'=' * 60}\nSTOPPED: daily API quota exhausted.\n{'=' * 60}")
+        print(f"{e}\n")
+        print("Everything completed so far is saved. Resume once the "
+              "quota resets (Groq's TPD is a rolling 24h window, so "
+              "wait ~a day from the FIRST request of the run, not from "
+              "this message) with the same command plus:")
+        print('  --resume "$(ls -t results/*.jsonl | head -1)"')
+        sys.exit(0)

@@ -1,0 +1,21 @@
+{
+  "type": "manifest",
+  "run_id": "r20260726_015506_1b37b6",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "groq",
+    "model_id": "llama-3.3-70b-versatile",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 12,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/w2_staging/gsm8k_extracted.json"
+  },
+  "config_hash": "6343f1031c46f526",
+  "suite_hash": "2737e135c7743528",
+  "ts": 1785027306.945034,
+  "resumed_at": [
+    1785030222.594196
+  ]
+}

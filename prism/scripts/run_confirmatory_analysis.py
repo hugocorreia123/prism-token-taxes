@@ -95,9 +95,14 @@ def main():
             if r["separation_warning"]:
                 print(f"  {L}: *** {r['separation_warning']} ***")
                 continue
+            direct = (f"{r['rtw_direct_paired']:.1%}"
+                      if r["rtw_direct_paired"] is not None else "n/a")
+            ci = r["rtw_bca_ci"]
+            ci_str = (f"({ci[0]:.1%}, {ci[1]:.1%})"
+                      if ci[0] is not None else "(n/a)")
             print(f"  {L}: RTW_glm={r['rtw_glm_marginal']:.1%}  "
-                  f"RTW_direct={r['rtw_direct_paired']}  "
-                  f"BCa_CI={r['rtw_bca_ci']}  "
+                  f"RTW_direct={direct}  "
+                  f"BCa_CI={ci_str}  "
                   f"acc {r['acc_off_glm']:.1%}->{r['acc_on_glm']:.1%}  "
                   f"claimable={r['claimable']}")
 
