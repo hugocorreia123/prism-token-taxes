@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260722_000544_77c5f7",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mock",
+    "model_id": "mock-1",
+    "protocol": "json_react_v1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 6,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/pilot_tasks.json"
+  },
+  "config_hash": "5ef4f174e63ddb0e",
+  "suite_hash": "bdecd4f37f19e401",
+  "ts": 1784675144.096315
+}

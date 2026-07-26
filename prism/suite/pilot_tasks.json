@@ -1,0 +1,173 @@
+{
+  "suite": "pilot_smoke_v0",
+  "note": "Harness smoke-test tasks, original content. The W1 gate proper runs with 10 tasks drawn from BFCL-v3 multi-turn + tool-wrapped GSM8K-hard per PRISM_SPEC §3; these exist so the harness runs end-to-end today. mock_script drives the CI mock only; real models never see it.",
+  "tasks": [
+    {
+      "id": "calcA_001",
+      "kind": "calc_qa",
+      "tools": [
+        "calculator"
+      ],
+      "judge": "numeric_exact",
+      "expected": 402.5,
+      "budget_cap": 192,
+      "content": {
+        "en": "A warehouse ships 23 crates on Monday and 12 on Tuesday. Each crate holds 11.5 kg. How many kilograms were shipped in total? Use the calculator; reply with ANSWER: <number>.",
+        "pt": "Um armazém expede 23 caixas na segunda-feira e 12 na terça-feira. Cada caixa leva 11,5 kg. Quantos quilogramas foram expedidos no total? Usa a calculadora; responde com ANSWER: <número>."
+      },
+      "mock_script": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "(23+12)*11.5"
+          }
+        },
+        {
+          "final": "ANSWER: 402.5"
+        }
+      ],
+      "solution_expr": "(23+12)*11.5"
+    },
+    {
+      "id": "calcA_002",
+      "kind": "calc_qa",
+      "tools": [
+        "calculator"
+      ],
+      "judge": "numeric_exact",
+      "expected": 21.75,
+      "budget_cap": 192,
+      "content": {
+        "en": "A tank holds 348 liters and drains at 12 liters per hour. After how many hours have three quarters of the water drained out? Use the calculator; reply with ANSWER: <number>.",
+        "pt": "Um depósito tem 348 litros e esvazia a 12 litros por hora. Ao fim de quantas horas já saiu três quartos da água? Usa a calculadora; responde com ANSWER: <número>."
+      },
+      "mock_script": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "(348*3/4)/12"
+          }
+        },
+        {
+          "final": "ANSWER: 21.75"
+        }
+      ],
+      "solution_expr": "(348*3/4)/12"
+    },
+    {
+      "id": "calcB_003",
+      "kind": "calc_qa",
+      "tools": [
+        "calculator",
+        "lookup"
+      ],
+      "judge": "numeric_exact",
+      "expected": 138.006,
+      "budget_cap": 224,
+      "lookup_table": {
+        "vat_rate_pt": 0.23
+      },
+      "content": {
+        "en": "An invoice's net amount is 112.20. Apply the VAT rate stored under key 'vat_rate_pt' and give the exact gross amount. Use lookup then calculator; reply with ANSWER: <number>.",
+        "pt": "O valor liquido de uma fatura e 112,20. Aplica a taxa de IVA guardada na chave 'vat_rate_pt' e indica o valor bruto exato. Usa lookup e depois calculator; responde com ANSWER: <numero>."
+      },
+      "mock_script": [
+        {
+          "tool": "lookup",
+          "args": {
+            "key": "vat_rate_pt"
+          }
+        },
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "112.20*1.23"
+          }
+        },
+        {
+          "final": "ANSWER: 138.006"
+        }
+      ],
+      "solution_expr": "112.20*1.23"
+    },
+    {
+      "id": "toolseq_004",
+      "kind": "tool_seq",
+      "tools": [
+        "lookup"
+      ],
+      "judge": "toolcall_match",
+      "expected_call": {
+        "tool": "lookup",
+        "args": {
+          "key": "warehouse_lisboa_capacity"
+        }
+      },
+      "budget_cap": 160,
+      "lookup_table": {
+        "warehouse_lisboa_capacity": 5400
+      },
+      "content": {
+        "en": "Retrieve the storage capacity of the Lisbon warehouse from the reference table. The key is 'warehouse_lisboa_capacity'. After retrieving it, reply ANSWER: done.",
+        "pt": "Vai buscar a capacidade de armazenamento do armazém de Lisboa à tabela de referência. A chave é 'warehouse_lisboa_capacity'. Depois de a obteres, responde ANSWER: done."
+      },
+      "mock_script": [
+        {
+          "tool": "lookup",
+          "args": {
+            "key": "warehouse_lisboa_capacity"
+          }
+        },
+        {
+          "final": "ANSWER: done"
+        }
+      ]
+    },
+    {
+      "id": "calcC_005",
+      "kind": "calc_qa",
+      "tools": [
+        "calculator"
+      ],
+      "judge": "numeric_exact",
+      "expected": 23,
+      "budget_cap": 192,
+      "content": {
+        "en": "A printer produces 184 pages in 8 minutes. At the same rate, how many pages does it produce per minute? Use the calculator; reply with ANSWER: <number>.",
+        "pt": "Uma impressora produz 184 páginas em 8 minutos. Ao mesmo ritmo, quantas páginas produz por minuto? Usa a calculadora; responde com ANSWER: <número>."
+      },
+      "mock_script": [
+        {
+          "tool": "calculator",
+          "args": {
+            "expression": "184/8"
+          }
+        },
+        {
+          "final": "ANSWER: 23"
+        }
+      ],
+      "solution_expr": "184/8"
+    },
+    {
+      "id": "hard_006",
+      "kind": "calc_qa",
+      "tools": [
+        "calculator"
+      ],
+      "judge": "numeric_exact",
+      "expected": 54,
+      "budget_cap": 128,
+      "content": {
+        "en": "Three suppliers deliver 17, 29 and 36 units. A quarter of the total is returned, and the rest is split evenly across 3 stores; each store then sells all but 2.5 units of its share. How many units were sold per store... wait, give TOTAL units sold across all stores. Use the calculator; reply with ANSWER: <number>.",
+        "pt": "Três fornecedores entregam 17, 29 e 36 unidades. Um quarto do total é devolvido e o resto é dividido igualmente por 3 lojas; cada loja vende depois tudo menos 2,5 unidades da sua parte. Quantas unidades foram vendidas por loja... espera, dá o TOTAL de unidades vendidas em todas as lojas. Usa a calculadora; responde com ANSWER: <número>."
+      },
+      "mock_script": [
+        {
+          "final": "ANSWER: 40"
+        }
+      ],
+      "solution_expr": "((17+29+36)*3/4/3-2.5)*3"
+    }
+  ]
+}

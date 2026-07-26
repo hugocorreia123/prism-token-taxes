@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260722_143444_5ec2f4",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mlx",
+    "model_id": "mlx-community/Qwen2.5-3B-Instruct-4bit",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 2,
+    "n_tasks": 2,
+    "budget_cap_default": 192,
+    "tasks_file": "/tmp/diag_subset.json"
+  },
+  "config_hash": "6c60acb880e3b5fe",
+  "suite_hash": "f0ff5203a1340cae",
+  "ts": 1784727284.0891469
+}

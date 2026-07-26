@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260721_235825_c15e54",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mlx",
+    "model_id": "mlx-community/Qwen2.5-3B-Instruct-4bit",
+    "protocol": "json_react_v1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 6,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/pilot_tasks.json"
+  },
+  "config_hash": "1d3c90889bdadf24",
+  "suite_hash": "d4f068eefc47ff00",
+  "ts": 1784674705.33143
+}

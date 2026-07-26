@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260724_173900_267b6c",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mock",
+    "model_id": "mock-1",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 3,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/w2_staging/bfcl_extracted.json"
+  },
+  "config_hash": "ad9eb46efa79763e",
+  "suite_hash": "8ab3991c30e89c68",
+  "ts": 1784911140.6405609
+}

@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260724_173900_b50d84",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mock",
+    "model_id": "mock-1",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 3,
+    "budget_cap_default": 192,
+    "tasks_file": "prism/suite/w2_staging/gsm8k_extracted.json"
+  },
+  "config_hash": "df39feab0a3c90d5",
+  "suite_hash": "2737e135c7743528",
+  "ts": 1784911140.5783339
+}

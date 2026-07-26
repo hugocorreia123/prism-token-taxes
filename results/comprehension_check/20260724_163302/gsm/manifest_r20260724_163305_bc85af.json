@@ -1,0 +1,18 @@
+{
+  "type": "manifest",
+  "run_id": "r20260724_163305_bc85af",
+  "harness_version": "0.1.0",
+  "config": {
+    "model": "mlx",
+    "model_id": "mlx-community/Qwen2.5-3B-Instruct-4bit",
+    "protocol": "json_react_v1.1",
+    "temperature": 0.2,
+    "seeds": 1,
+    "n_tasks": 3,
+    "budget_cap_default": 192,
+    "tasks_file": "/var/folders/q5/lhmpgtq56_1byg30w6fk99hh0000gn/T/comprehension_e_gm5l27.json"
+  },
+  "config_hash": "e360efb2875665fb",
+  "suite_hash": "8cd51ddc6ae6f9cf",
+  "ts": 1784907185.338987
+}
