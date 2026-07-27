@@ -471,26 +471,39 @@ reduction from 80 to 53, and a third candidate fix that was tested and deliberat
   one property the real provider has. The mock agreed with the code instead of
   challenging it.
 
-The pattern underneath these is sharper than "check things early." Every defect that
-was caught was caught by **a second, independent computation of something the code
-already believed** — and every defect that slipped through was in a place where only
-one computation existed:
+Sorted by *how* they failed rather than what they were, these fall into two groups
+that need completely different defences.
 
-| Caught by redundancy | The independent second opinion |
+**Failures that announce themselves.** The protocol incompatibility returned an HTTP
+400. The infeasible arm returned 429s. Both were unmissable the moment the code ran
+against the real dependency — the error was designing an entire arm *before* spending
+the five requests that would have exposed it. These cost time, not correctness, and
+the defence is trivial: run the smallest real thing first.
+
+**Failures that return a plausible number.** These are the dangerous ones, and nothing
+about them looks wrong. An accuracy model that returns 0.20 when the truth is 0.80
+doesn't crash — it produces a clean table with every conclusion inverted. A metric
+computing tokens per *attempt* instead of per *success* agrees with the correct version
+in every cell where accuracy happens to match, so it looks right most of the time.
+Duplicate run records just make a token total slightly larger. A resume that skips
+nothing still prints "53 combos already have a real outcome, will be skipped."
+
+Only one thing catches that class: **a second, independent computation of something
+the code already believed.**
+
+| Silent defect | The independent second opinion that caught it |
 |---|---|
 | Hand-typed ground truth | re-derived from the dataset's own annotations |
 | A misspecified headline metric | the same quantity computed a second way |
 | An inverted accuracy model | synthetic data with a known correct answer |
 | Duplicate and orphaned run records | each attempt's summary vs. the sum of its own turns |
 
-| Slipped through | What was missing |
-|---|---|
-| Power analysis on the wrong metric | no second estimate to disagree with the first |
-| Pre-registration ordering | nothing checked that the commit existed |
-| Protocol incompatibility | nothing tried the real provider until it mattered |
-| An infeasible arm | nothing compared token cost against the quota |
+The two silent defects that were *not* caught are exactly the two where no second
+computation existed: the power analysis had no independent estimate to disagree with
+it, and nothing ever verified that the pre-registration commit was real.
 
-Redundancy is the whole mechanism. A single computation, however careful, has nothing
-to be wrong *against* — and this project's most dangerous bug (an accuracy model
-returning exactly the inverse of the truth) was invisible to inspection and obvious to
-a test that already knew the answer.
+"Independent" carries the weight there. A second computation that shares the first's
+assumptions confirms them rather than testing them — the dual-metric check worked
+precisely because one path ran through a GLM and the other was raw arithmetic over the
+records, so an error in either had nowhere to hide. A single computation, however
+careful, has nothing to be wrong against.
