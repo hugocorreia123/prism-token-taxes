@@ -75,22 +75,42 @@ version costs about $2,100/month for the same amount of finished work.
 
 ### 2. …but the damage doesn't transfer to a larger model
 
-The same tasks on Llama-3.3-70B:
+The same interventions on Llama-3.3-70B, 106 runs across the same task family:
 
-> ⚠️ **Partial: 53 of 96 runs.** Free-tier daily quota exhausted mid-run. Six tasks
-> are complete and balanced; the rest is pending.
+| Language | RTW | 95% BCa CI | Accuracy off → on | Gate |
+|---|---|---|---|---|
+| EN | +11.6% | (−19.9%, +30.9%) | 92.3% → 91.7% | **passes** |
+| PT | +15.3% | (−10.3%, +50.1%) | 92.9% → 100.0% | **passes** |
 
-- **50 of 53 succeeded (~94%)**, against ~31% for the 3B model on identical tasks
-- The three failures fell in three different conditions — and **none** were in the
-  condition that collapsed the small model
+The accuracy penalty is simply gone. Where the 3B model lost half its successes, the
+70B model loses 0.6 percentage points — and in Portuguese it goes up.
 
-The accuracy penalty appears to be a function of **model capacity**, not of the
-techniques themselves. A 3B model has no headroom to absorb compressed instructions
-under a thinking budget. A 70B model absorbs both without noticing.
+**A control for the obvious objection.** M1's headline covers 40 tasks; M2 covers
+seven, so the difference could be task difficulty rather than model scale. Re-running
+M1's analysis restricted to *exactly the seven tasks M2 saw* settles it — and the
+effect gets **stronger**, not weaker:
+
+| Same 7 tasks | Qwen-3B | Llama-70B |
+|---|---|---|
+| EN accuracy off → on | 50.0% → **14.3%** | 92.3% → **91.7%** |
+| EN cost per success | 3,043 → 15,123 (**5.0× worse**) | 2,200 → 1,946 |
+| PT accuracy off → on | 35.7% → **14.3%** | 92.9% → **100%** |
+| PT cost per success | 4,185 → 10,782 (**2.6× worse**) | 2,195 → 1,859 |
+
+Same tasks, same schemas, same protocol — opposite outcomes. The collapse tracks
+model capacity, not the tasks.
+
+**What this does and doesn't establish.** Both M2 intervals span zero, so the
+*magnitude* of the saving is not demonstrated: "12–15% cheaper on a large model" is
+not a claim this data supports. What it does support is the qualitative difference —
+the interventions are **harmful on the small model and harmless on the large one**,
+and the accuracy gate flips from failing to passing. A penalty disappearing is not
+the same as a benefit appearing, and only the first is established here.
 
 **The practical takeaway:** "small cheap model + aggressive token compression" is the
 worst of both worlds — you pay the compression's accuracy cost precisely where the
-model can least afford it. On capable models the same compression looks safe.
+model can least afford it. On capable models the same compression appears safe, which
+is a weaker and more useful claim than "it pays off."
 
 ### 3. Two techniques that are each survivable become fatal together
 
@@ -231,6 +251,8 @@ as data, not as noise to clean up.
 
 ### The full technical numbers
 
+**M1 — Qwen2.5-3B, 848 runs (40 GSM8K + 13 BFCL tasks, 2 seeds)**
+
 | Suite · language | RTW | 95% BCa CI | Accuracy off → on | Claimable? |
 |---|---|---|---|---|
 | GSM8K · EN | −109.7% | (−336.6%, −3.2%) | 31.3% → 16.2% | **no** — gate failed |
@@ -238,8 +260,20 @@ as data, not as noise to clean up.
 | BFCL · EN | −102.2% | (−637.6%, +14.2%) | 15.4% → 3.8% | **no** — gate failed |
 | BFCL · PT | +28.8% | (+5.0%, +47.9%) | 7.7% → 7.7% | yes — on 2 successes/arm |
 
+**M2 — Llama-3.3-70B, 106 runs (7 GSM8K tasks, repeated calls)**
+
+| Suite · language | RTW | 95% BCa CI | Accuracy off → on | Claimable? |
+|---|---|---|---|---|
+| GSM8K · EN | +11.6% | (−19.9%, +30.9%) | 92.3% → 91.7% | gate passed, CI spans zero |
+| GSM8K · PT | +15.3% | (−10.3%, +50.1%) | 92.9% → 100.0% | gate passed, CI spans zero |
+
 RTW ("recoverable token waste") = `1 − T_on/T_off`, where T is all-in tokens per
 success. Negative means the optimized condition costs **more** per completed task.
+
+M2's two measurements per cell are **repeated calls at temperature 0.2, not seed
+replicates** — Groq exposes no sampling seed, so `seed_effective` is recorded as
+`None` throughout. They are independent draws, but calling them "seeds" would be
+wrong.
 
 Note the interval widths. GSM8K · PT, the largest arm at 640 runs, spans −163% to
 +34% — **genuinely inconclusive**, not a demonstrated negative. That's a real
@@ -284,6 +318,35 @@ and returned **empty content**. Llama-3.3-70B follows the same protocol perfectl
 no prompt changes at all. Worth knowing for anyone building cross-provider agent
 evaluations.
 
+**A resume that silently re-ran everything it claimed to skip.** Long runs can be
+interrupted by an API quota, so the harness supports `--resume`. It was tested
+against an interruption and against the harder case of a crash landing *mid-attempt*
+— and it passed both. It was never tested against a **seedless provider**. Groq
+exposes no sampling seed, so the runner records `seed_effective=None`, while the
+resume built its lookup key from the raw loop variable `0`. `(task, cell, None)` never
+matches `(task, cell, 0)`, so a resumed run cheerfully printed "53 combos already
+have a real outcome, will be skipped" and then re-executed all 53. One root cause,
+three separate symptoms, and **only the first was visible from the console**:
+
+1. cells re-running instead of being skipped — a wasted day of API quota
+2. the re-runs written as `attempt=1` again, colliding with the originals and
+   producing duplicate keys
+3. orphaned turn records from an earlier aborted run silently inflating the token
+   total of the attempt that followed them, because orphan-backfilling keys on
+   `seed_effective` too and had been defeated the same way
+
+Symptoms 2 and 3 were caught only because the accounting layer cross-checks each
+attempt's summary against the sum of its own turn records and refuses to proceed when
+they disagree. The recovery script (`scripts/repair_duplicate_attempts.py`)
+renumbers repeated attempts and splits orphans back out by reconciling token sums —
+turning the damage into extra replicates rather than discarding it, since the re-runs
+are genuine independent measurements.
+
+The generalisable lesson is not "test resume." It is that a mock which is more
+convenient than the real dependency will quietly skip the code path the real
+dependency exercises.
+
+
 **Rate limits need pacing, not retries.** Reacting to HTTP 429s is useless when the
 binding constraint is a tokens-per-minute ceiling. The harness now paces proactively
 against a rolling 60-second budget, honours the API's own `retry-after` value, and
@@ -323,6 +386,10 @@ Stated plainly, because they bound what the results support.
 - **M2 uses a different model than pre-registered.** `llama-3.3-70b-versatile` replaced
   `gpt-oss-120b` after the protocol incompatibility above. Evidence-based, and it
   required no prompt change so the arms stay comparable — but it is a deviation.
+- **M2 is quota-shaped, not design-shaped.** Seven tasks and two repeated calls per
+  cell (106 runs) is what a free-tier daily token cap allowed across three days, not a
+  chosen sample size. Both its intervals span zero, so M2 establishes that the
+  accuracy penalty *disappears* at 70B — not that a token saving *appears*.
 - **One model family per scale.** "Small models break, large models absorb" rests on
   two models. It is a hypothesis worth testing properly, not an established result.
 
@@ -399,8 +466,31 @@ reduction from 80 to 53, and a third candidate fix that was tested and deliberat
 - **Check per-run token cost against quota limits before designing an arm.** The
   multi-turn transfer arm was infeasible from the start — ~94k tokens per run against a
   100k daily cap — and one piece of arithmetic would have shown it.
+- **Test against the awkward dependency, not the convenient mock.** Resume was tested
+  twice, thoroughly, against a mock that wasn't seedless — so it never exercised the
+  one property the real provider has. The mock agreed with the code instead of
+  challenging it.
 
-The recurring theme: each of these was cheap to check early and expensive to discover
-late. The checks that *were* built early — ground-truth verification, dual-computed
-headline metric, synthetic-recovery tests for the analysis code — each caught a defect
-that would otherwise have reached a conclusion.
+The pattern underneath these is sharper than "check things early." Every defect that
+was caught was caught by **a second, independent computation of something the code
+already believed** — and every defect that slipped through was in a place where only
+one computation existed:
+
+| Caught by redundancy | The independent second opinion |
+|---|---|
+| Hand-typed ground truth | re-derived from the dataset's own annotations |
+| A misspecified headline metric | the same quantity computed a second way |
+| An inverted accuracy model | synthetic data with a known correct answer |
+| Duplicate and orphaned run records | each attempt's summary vs. the sum of its own turns |
+
+| Slipped through | What was missing |
+|---|---|
+| Power analysis on the wrong metric | no second estimate to disagree with the first |
+| Pre-registration ordering | nothing checked that the commit existed |
+| Protocol incompatibility | nothing tried the real provider until it mattered |
+| An infeasible arm | nothing compared token cost against the quota |
+
+Redundancy is the whole mechanism. A single computation, however careful, has nothing
+to be wrong *against* — and this project's most dangerous bug (an accuracy model
+returning exactly the inverse of the truth) was invisible to inspection and obvious to
+a test that already knew the answer.
