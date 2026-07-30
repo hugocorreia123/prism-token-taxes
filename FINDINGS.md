@@ -420,6 +420,17 @@ arms would have been reported as savings.
 
 ## 7. Threats to validity
 
+**A later study measured exactly how underpowered — and it is worse than stated
+here.** [Tolerance](https://github.com/hugocorreia123/tolerance-agent-evals) treats
+cost-per-success as the ratio estimator it is, and reaches three conclusions about this
+study. The naive interval on that metric achieves 39% coverage against a nominal 95%.
+The minimum detectable effect for the GSM8K arm is 121–222%, so **the −109.7% headline
+below sits beneath this study's own detection threshold**; the BCa interval excluded
+zero only marginally, and BCa is asymmetric. And the closed-form MDE is itself
+optimistic by 1.7–3.7×, making even those figures lower bounds. The conclusions in §5
+should be read with that in mind: the direction is supported by the matched-task
+control, the magnitude is not resolvable at this sample size.
+
 **The study is underpowered for its own primary metric.** The power analysis estimated
 the sample size needed to detect differences in *tokens* (n = 13–39). The primary
 metric is tokens per *success*, which inherits accuracy variance through its

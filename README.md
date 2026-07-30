@@ -363,6 +363,16 @@ actually asks. **This is the single most important methodological lesson here.**
 
 ---
 
+## Audited afterwards
+
+A follow-up study, [Tolerance](https://github.com/hugocorreia123/tolerance-agent-evals),
+re-examined whether this study could detect what it claimed. It found the minimum
+detectable effect for the GSM8K arm to be 121–222%, meaning **the −109.7% headline sits
+below this study's own detection threshold** — and that the formula producing that
+threshold is itself optimistic by 1.7–3.7×. The direction of the finding is supported by
+the matched-task control; the magnitude is not resolvable at n=53. That audit is linked
+here rather than buried, because it materially qualifies what follows.
+
 ## Limitations
 
 Stated plainly, because they bound what the results support.

@@ -100,7 +100,14 @@ def main():
         for factors, seed in order:
                 done += 1
                 cell = f"S{factors['S']}B{factors['B']}L{factors['L']}"
-                if (task["id"], cell, seed) in already_done:
+                # Seedless providers (Groq exposes no sampling seed) are
+                # recorded with seed_effective=None, so the resume key must
+                # be built the SAME way the runner builds it. Comparing the
+                # raw loop `seed` against a stored None silently matches
+                # nothing and re-runs everything — a real bug that cost a
+                # full day of API quota before it was caught.
+                seed_eff = None if getattr(model, "seedless", False) else seed
+                if (task["id"], cell, seed_eff) in already_done:
                     print(f"[{done}/{total}] {task['id']} {cell} seed{seed} "
                           f"-> already done, resuming past it")
                     continue
@@ -113,7 +120,7 @@ def main():
                           f"S{factors['S']}B{factors['B']}L1 seed{seed} "
                           f"-> SKIPPED (PT not yet localized for this task)")
                     continue
-                attempt_n = next_attempt.get((task["id"], cell, seed), 1)
+                attempt_n = next_attempt.get((task["id"], cell, seed_eff), 1)
                 if task.get("kind") == "bfcl_multi_turn":
                     outcome = run_multiturn_attempt(
                         model, task, factors, seed, args.temperature,
