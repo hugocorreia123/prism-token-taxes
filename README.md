@@ -517,3 +517,16 @@ assumptions confirms them rather than testing them — the dual-metric check wor
 precisely because one path ran through a GLM and the other was raw arithmetic over the
 records, so an error in either had nowhere to hide. A single computation, however
 careful, has nothing to be wrong against.
+
+---
+
+## Part of a series
+
+Three studies applying the same discipline to questions practitioners answer by
+folklore:
+
+- [**Prism**](https://github.com/hugocorreia123/prism-token-taxes) — do LLM token-saving techniques actually save money?
+- [**Tolerance**](https://github.com/hugocorreia123/tolerance-agent-evals) — could your evaluation detect the improvement you claim? (It audits Prism, and finds Prism's headline sits below its own detection threshold.)
+- [**Tripwire**](https://github.com/hugocorreia123/tripwire-drift-economics) — is a drift alarm worth more than a cron job?
+
+Each reports what it found, including when that was nothing.
